@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Deikstra.BinaryHeap;
 
 namespace Deikstra
 {
@@ -8,7 +6,11 @@ namespace Deikstra
     {
         static void Main()
         {
-            
+            CitiesMapParseResult parseResult = CitiesMapParser.Parse( "in.txt" );
+            (long start, long end, CitiesMap map) = ( parseResult.StartCity, parseResult.EndCity, parseResult.Map );
+
+            long minDistance = map.GetMinDistance( fromCity: start, toCity: end );
+            Console.WriteLine(  );
         }
     }
 }
