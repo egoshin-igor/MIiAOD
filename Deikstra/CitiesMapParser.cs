@@ -20,6 +20,7 @@ namespace Deikstra
                     (long from, long to) = (long.Parse( cityDistanceParts[ 0 ] ) - 1, long.Parse( cityDistanceParts[ 1 ] ) - 1);
                     long distance = long.Parse( cityDistanceParts[ 2 ] );
                     distanceMap[ from, to ] = distance;
+                    distanceMap[ to, from ] = distance;
                 }
 
                 return new CitiesMapParseResult(
