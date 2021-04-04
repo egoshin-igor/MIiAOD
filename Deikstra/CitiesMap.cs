@@ -1,20 +1,13 @@
-﻿namespace Deikstra
+﻿using System.Collections.Generic;
+
+namespace Deikstra
 {
     public class CitiesMap
     {
-        private readonly long[,] _distanceMap;
+        private readonly DistanceMapContainer _distanceMap;
 
-        public long CitiesCount { get; }
-        public long RoadCounts { get; }
-
-        public CitiesMap(
-            long citiesCount,
-            long roadCounts,
-            long[,] distanceMap )
+        public CitiesMap( DistanceMapContainer distanceMap )
         {
-            CitiesCount = citiesCount;
-            RoadCounts = roadCounts;
-
             _distanceMap = distanceMap;
         }
 

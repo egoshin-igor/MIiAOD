@@ -16,13 +16,13 @@ namespace Deikstra
         /// </summary>
         private readonly HashSet<long> _minDistanceCities;
 
-        private readonly long[,] _distanceMap;
+        private readonly DistanceMapContainer _distanceMap;
         private readonly long _fromCity;
         private readonly long _toCity;
 
         private MinDistanceResult _result = null;
 
-        public CitiesMinDistanceCalculator( long[,] distanceMap, long fromCity, long toCity )
+        public CitiesMinDistanceCalculator( DistanceMapContainer distanceMap, long fromCity, long toCity )
         {
             _distanceMap = distanceMap;
             _fromCity = fromCity;
@@ -52,28 +52,18 @@ namespace Deikstra
                 }
                 _minDistanceCities.Add( currentCityIndex );
 
-                var citiesCount = _distanceMap.GetUpperBound( 0 );
-                for ( long city = 0; city <= citiesCount; city++ )
+
+                var roadsFromCurrentCity = _distanceMap.GetRoadsFromCity( currentCityIndex );
+                foreach ( var (toCity, distance) in roadsFromCurrentCity )
                 {
-                    if ( _minDistanceCities.Contains( city ) )
-                    {
-                        continue;
-                    }
-
-                    if ( _distanceMap[ currentCityIndex, city ] == 0 )
-                    {
-                        continue;
-                    }
-
-
-                    long distance = _distanceMap[ currentCityIndex, city ] + currentCity.Distance;
-                    long currentMinDistance = _distancePathByCityNumber.ContainsKey( city )
-                        ? _distancePathByCityNumber[ city ].Distance
+                    long newDistance = distance + currentCity.Distance;
+                    long currentMinDistance = _distancePathByCityNumber.ContainsKey( toCity )
+                        ? _distancePathByCityNumber[ toCity ].Distance
                         : long.MaxValue;
-                    if ( distance < currentMinDistance )
+                    if ( newDistance < currentMinDistance )
                     {
-                        _heap.Add( new CityDistance( currentCityIndex, city, distance ) );
-                        _distancePathByCityNumber[ city ] = new DistancePath( distance, currentCityIndex );
+                        _heap.Add( new CityDistance( currentCityIndex, toCity, newDistance ) );
+                        _distancePathByCityNumber[ toCity ] = new DistancePath( newDistance, currentCityIndex );
                     }
                 }
             }
