@@ -1,0 +1,5 @@
+Line 1, position 1: Мама мыла
+Line 1, position 6: Мыл
+Line 1, position 23: Мама мыла
+Line 2, position 1: Мыл
+Line 3, position 11: Мыл
